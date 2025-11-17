@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyCard - مولّد كروت العمل الرقمية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #00d4aa, #f5576c, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        @media (min-width: 768px) {
+            @keyframes floating {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-20px) rotate(2deg); }
+            }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+            to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="gradient-bg min-h-full text-white overflow-x-hidden"><!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"><!-- Floating Background Elements -->
+   <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-10 sm:top-20 left-4 sm:left-10 w-32 sm:w-48 lg:w-72 h-32 sm:h-48 lg:h-72 bg-teal-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+    <div class="absolute top-20 sm:top-40 right-4 sm:right-10 w-32 sm:w-48 lg:w-72 h-32 sm:h-48 lg:h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-10 sm:bottom-20 left-1/2 w-32 sm:w-48 lg:w-72 h-32 sm:h-48 lg:h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style="animation-delay: 4s;"></div>
+   </div>
+   <div class="container mx-auto max-w-7xl relative z-10">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"><!-- Content -->
+     <div class="text-center lg:text-right space-y-6 lg:space-y-8 order-2 lg:order-1">
+      <h1 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent px-2">أنشئ كرت عملك الرقمي خلال ثوانٍ</h1>
+      <p id="hero-subtitle" class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-2">بدون تسجيل، بدون تعقيد - فقط أدخل بياناتك واحصل على كرت رقمي احترافي</p>
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-2"><a href="create.php" id="cta-primary" class="px-6 sm:px-8 py-3 sm:py-4 bg-white text-purple-600 font-bold text-base sm:text-lg rounded-2xl hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 pulse-glow text-center"> ابدأ الآن </a> <a href="demo.html" id="cta-secondary" class="px-6 sm:px-8 py-3 sm:py-4 glass text-white font-semibold text-base sm:text-lg rounded-2xl hover:bg-white hover:bg-opacity-20 transform hover:scale-105 transition-all duration-300 text-center"> شاهد مثال حي </a>
+      </div>
+     </div><!-- Floating Card Mockup -->
+     <div class="flex justify-center lg:justify-start order-1 lg:order-2 mb-8 lg:mb-0">
+      <div class="floating">
+       <div class="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 max-w-xs sm:max-w-sm w-full card-hover mx-4 sm:mx-0">
+        <div class="space-y-3 sm:space-y-4">
+         <div class="w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center">
+          <svg class="w-6 sm:w-7 lg:w-8 h-6 sm:h-7 lg:h-8 text-white" fill="currentColor" viewbox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="text-lg sm:text-xl font-bold">أحمد محمد</h3>
+          <p class="text-blue-200 text-sm sm:text-base">مطور تطبيقات</p>
+         </div>
+         <div class="space-y-1 sm:space-y-2 text-xs sm:text-sm text-blue-100">
+          <p>📧 ahmed@example.com</p>
+          <p>📱 +966 50 123 4567</p>
+          <p>🌐 www.ahmed-dev.com</p>
+         </div>
+         <div class="flex gap-2">
+          <div class="w-6 sm:w-8 h-6 sm:h-8 bg-blue-500 rounded-md sm:rounded-lg"></div>
+          <div class="w-6 sm:w-8 h-6 sm:h-8 bg-teal-500 rounded-md sm:rounded-lg"></div>
+          <div class="w-6 sm:w-8 h-6 sm:h-8 bg-orange-500 rounded-md sm:rounded-lg"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- How It Works Section -->
+  <section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+   <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-12 sm:mb-16 scroll-reveal">
+     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 px-2">كيف يعمل؟</h2>
+     <p class="text-lg sm:text-xl text-blue-100 max-w-2xl mx-auto px-2">أربع خطوات بسيطة للحصول على كرت عملك الرقمي</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center card-hover scroll-reveal">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6"><span class="text-xl sm:text-2xl font-bold">1</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">أدخل بياناتك</h3>
+      <p class="text-blue-100 text-sm sm:text-base">اسمك، وظيفتك، ومعلومات التواصل</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center card-hover scroll-reveal" style="animation-delay: 0.2s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6"><span class="text-xl sm:text-2xl font-bold">2</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">اختر التصميم</h3>
+      <p class="text-blue-100 text-sm sm:text-base">من مجموعة تصاميم احترافية ومتنوعة</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center card-hover scroll-reveal" style="animation-delay: 0.4s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6"><span class="text-xl sm:text-2xl font-bold">3</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">احصل على الرابط</h3>
+      <p class="text-blue-100 text-sm sm:text-base">رابط فريد وقصير لكرت عملك</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center card-hover scroll-reveal" style="animation-delay: 0.6s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6"><span class="text-xl sm:text-2xl font-bold">4</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">شارك مع العالم</h3>
+      <p class="text-blue-100 text-sm sm:text-base">عبر الواتساب، الإيميل، أو أي منصة</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Showcase Section -->
+  <section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+   <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-12 sm:mb-16 scroll-reveal">
+     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 px-2">نماذج من كروت العمل</h2>
+     <p class="text-lg sm:text-xl text-blue-100 px-2">تصاميم متنوعة تناسب جميع المهن والأذواق</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"><!-- Card 1 - Classic -->
+     <div class="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 card-hover scroll-reveal">
+      <div class="bg-white text-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+       <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+        <div class="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base">
+         س
+        </div>
+        <div>
+         <h4 class="font-bold text-sm sm:text-base">سارة أحمد</h4>
+         <p class="text-xs sm:text-sm text-gray-600">مصممة جرافيك</p>
+        </div>
+       </div>
+       <div class="text-xs space-y-1 text-gray-600">
+        <p>sara@design.com</p>
+        <p>+966 55 987 6543</p>
+       </div>
+      </div>
+      <p class="text-center mt-3 sm:mt-4 text-blue-100 text-sm sm:text-base">كلاسيكي</p>
+     </div><!-- Card 2 - Modern -->
+     <div class="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 card-hover scroll-reveal" style="animation-delay: 0.2s;">
+      <div class="bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-xl sm:rounded-2xl p-4 sm:p-6">
+       <div class="space-y-2 sm:space-y-3">
+        <div class="w-8 sm:w-10 h-8 sm:h-10 bg-white bg-opacity-20 rounded-md sm:rounded-lg"></div>
+        <h4 class="font-bold text-base sm:text-lg">محمد علي</h4>
+        <p class="text-purple-100 text-sm sm:text-base">مطور ويب</p>
+        <div class="text-xs sm:text-sm space-y-1 text-purple-100">
+         <p>mohammed@web.dev</p>
+         <p>+966 50 111 2222</p>
+        </div>
+       </div>
+      </div>
+      <p class="text-center mt-3 sm:mt-4 text-blue-100 text-sm sm:text-base">مودرن</p>
+     </div><!-- Card 3 - Dark -->
+     <div class="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 card-hover scroll-reveal md:col-span-2 lg:col-span-1" style="animation-delay: 0.4s;">
+      <div class="bg-gray-900 text-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-700">
+       <div class="space-y-2 sm:space-y-3">
+        <div class="flex justify-between items-start">
+         <div>
+          <h4 class="font-bold text-sm sm:text-base">فاطمة خالد</h4>
+          <p class="text-gray-400 text-xs sm:text-sm">مستشارة تسويق</p>
+         </div>
+         <div class="w-6 sm:w-8 h-6 sm:h-8 bg-green-500 rounded-full"></div>
+        </div>
+        <div class="text-xs space-y-1 text-gray-300">
+         <p>fatima@marketing.co</p>
+         <p>+966 56 333 4444</p>
+        </div>
+       </div>
+      </div>
+      <p class="text-center mt-3 sm:mt-4 text-blue-100 text-sm sm:text-base">داكن</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Features Section -->
+  <section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+   <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-12 sm:mb-16 scroll-reveal">
+     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 px-2">لماذا MyCard؟</h2>
+     <p class="text-lg sm:text-xl text-blue-100 px-2">مميزات تجعل كرت عملك يتميز عن الباقي</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">مشاركة سهلة</h3>
+      <p class="text-blue-100 text-sm sm:text-base">شارك كرتك برابط واحد عبر جميع المنصات</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.2s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">متجاوب</h3>
+      <p class="text-blue-100 text-sm sm:text-base">يعمل بشكل مثالي على جميع الأجهزة</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.4s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">بدون تسجيل</h3>
+      <p class="text-blue-100 text-sm sm:text-base">ابدأ فوراً بدون إنشاء حساب أو تعقيدات</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.6s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">آمن ومحمي</h3>
+      <p class="text-blue-100 text-sm sm:text-base">بياناتك محفوظة بأعلى معايير الأمان</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.8s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">قابل للتخصيص</h3>
+      <p class="text-blue-100 text-sm sm:text-base">اختر من تصاميم متنوعة وألوان مختلفة</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 1s;">
+      <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-indigo-400 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+       <svg class="w-7 sm:w-8 h-7 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">سريع وبسيط</h3>
+      <p class="text-blue-100 text-sm sm:text-base">كرتك جاهز خلال أقل من دقيقة واحدة</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- FAQ Section -->
+  <section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+   <div class="container mx-auto max-w-4xl">
+    <div class="text-center mb-12 sm:mb-16 scroll-reveal">
+     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 px-2">أسئلة شائعة</h2>
+     <p class="text-lg sm:text-xl text-blue-100 px-2">إجابات على أهم الأسئلة حول MyCard</p>
+    </div>
+    <div class="space-y-4 sm:space-y-6">
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal">
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">هل الخدمة مجانية؟</h3>
+      <p class="text-blue-100 text-sm sm:text-base leading-relaxed">نعم، يمكنك إنشاء كرت عملك الأساسي مجاناً. نوفر أيضاً خطط مدفوعة للمميزات المتقدمة.</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.2s;">
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">هل أحتاج إنشاء حساب؟</h3>
+      <p class="text-blue-100 text-sm sm:text-base leading-relaxed">لا، يمكنك إنشاء كرتك فوراً بدون تسجيل. لكن إنشاء حساب يتيح لك حفظ وتعديل كروتك لاحقاً.</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.4s;">
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">هل يمكن تعديل الكرت بعد إنشائه؟</h3>
+      <p class="text-blue-100 text-sm sm:text-base leading-relaxed">نعم، يمكنك تعديل جميع بيانات كرتك في أي وقت من خلال الرابط الخاص بك.</p>
+     </div>
+     <div class="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-hover scroll-reveal" style="animation-delay: 0.6s;">
+      <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">كم عدد الكروت التي يمكنني إنشاؤها؟</h3>
+      <p class="text-blue-100 text-sm sm:text-base leading-relaxed">يمكنك إنشاء كرت واحد مجاناً، وكروت إضافية مع الخطط المدفوعة.</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Final CTA Section -->
+  <section class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+   <div class="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 opacity-20"></div>
+   <div class="container mx-auto max-w-4xl text-center relative z-10">
+    <div class="scroll-reveal">
+     <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 sm:mb-8 px-2 leading-tight">ابدأ الآن وصمّم كرت عمل يعبر عن هويتك</h2>
+     <p class="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-8 sm:mb-12 max-w-2xl mx-auto px-2 leading-relaxed">انضم إلى آلاف المحترفين الذين يستخدمون MyCard لتقديم أنفسهم بطريقة مميزة</p><a href="create.php" class="inline-block px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 bg-white text-purple-600 font-black text-lg sm:text-xl rounded-2xl sm:rounded-3xl hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 pulse-glow"> إنشاء أول كرت الآن </a>
+    </div>
+   </div>
+  </section>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            hero_title: "أنشئ كرت عملك الرقمي خلال ثوانٍ",
+            hero_subtitle: "بدون تسجيل، بدون تعقيد - فقط أدخل بياناتك واحصل على كرت رقمي احترافي",
+            cta_primary: "ابدأ الآن",
+            cta_secondary: "شاهد مثال حي"
+        };
+
+        async function onConfigChange(config) {
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const ctaPrimary = document.getElementById('cta-primary');
+            const ctaSecondary = document.getElementById('cta-secondary');
+
+            if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+            if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+            if (ctaPrimary) ctaPrimary.textContent = config.cta_primary || defaultConfig.cta_primary;
+            if (ctaSecondary) ctaSecondary.textContent = config.cta_secondary || defaultConfig.cta_secondary;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["cta_primary", config.cta_primary || defaultConfig.cta_primary],
+                ["cta_secondary", config.cta_secondary || defaultConfig.cta_secondary]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-reveal elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollElements = document.querySelectorAll('.scroll-reveal');
+            scrollElements.forEach(el => observer.observe(el));
+        });
+
+
+
+        // Simple Parallax Effect
+        let ticking = false;
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxElements = document.querySelectorAll('.floating');
+                    
+                    parallaxElements.forEach(element => {
+                        element.style.transform = `translateY(${scrolled * 0.3}px)`;
+                    });
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f655d8a1d01569',t:'MTc2MzI4OTI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
